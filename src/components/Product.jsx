@@ -1,12 +1,16 @@
 import React from 'react'
 import styled from 'styled-components'
+import {useContextStore} from "./StoreContext"
 
-export const Product = ({store,addProductHandler}) => {
+
+export const Product = () => {
+
+  const {store,addProduct,}=useContextStore()
     
   return (
     <Container>
       <Ul>
-        {store.map((item)=>(
+        {store.product.map((item)=>(
             <Li key={item.id}>
                 <ImgContainer>
                 <img src={item.url} />
@@ -14,7 +18,7 @@ export const Product = ({store,addProductHandler}) => {
             <DataProductContainer>
             <ProductText>{item.productname}  </ProductText>
             <ProductPrice>{item.staticprice} -сом</ProductPrice>
-             <Button disabled={item.quantiti > 0} onClick={()=> addProductHandler(item.id)}>В корзину</Button>
+             <Button disabled={item.quantiti > 0} onClick={()=> {addProduct(item.id)}}>В корзину</Button>
               
                </DataProductContainer>
             </Li>

@@ -1,13 +1,15 @@
 import React from "react";
 import styled from "styled-components";
 import { productsData } from "../utils/Constans";
-export const TableProducts = ({
-  store,
-  incrementProductHandler,
-  decrementmentProductHandler,
-  removeProductHandler,
-}) => {
-  const totalPrice = store.map((item)=>{
+import {useContextStore} from "./StoreContext"
+export const TableProducts = (
+) => {
+  const { store= [],
+    incProduct,
+    decProduct,
+    removeProduct}=useContextStore()
+
+  const totalPrice = store?.product.map((item)=>{
     if ( item.quantiti === 0){
         const result={...item, price : (item.price = 0)}
         return result.price
@@ -29,7 +31,7 @@ export const TableProducts = ({
             <p>Удалить</p>
           </Thead>
           <ol>
-            {store.map((item, index) => {
+            {store.product.map((item, index) => {
               return (
                 item.quantiti !== 0 && (
                   <li>
@@ -42,20 +44,20 @@ export const TableProducts = ({
                       <div style={{marginRight:"90px"}}>{item.price} </div>
                       <ContainerCount>
                         <ButtonCount
-                          onClick={() => decrementmentProductHandler(item.id)}
+                          onClick={() => {decProduct(item.id)}}
                         >
                           -
                         </ButtonCount>
                         <span>{item.quantiti} </span>
                         <ButtonCount
-                          onClick={() => incrementProductHandler(item.id)}
+                          onClick={() => {incProduct(item.id)}}
                         >
                           +
                         </ButtonCount>
                       </ContainerCount>
                       
                       <ButtonRemove
-                        onClick={() => removeProductHandler(item.id)}
+                        onClick={() =>{ removeProduct(item.id)}}
                       >
                         Remove
                       </ButtonRemove>
